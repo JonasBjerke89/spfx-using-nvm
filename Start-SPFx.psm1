@@ -9,12 +9,27 @@ Function Start-SPFx()
     $generator = ""
 
     switch ($version)
-    {     
-    	"1.8.0" 
+    {
+        "1.9.1"
+        {
+            $nodeJSVersion = "10.16.0"
+            $generator = "@microsoft/generator-sharepoint@1.9.1"   
+        }
+        "1.8.2"
+        {
+            $nodeJSVersion = "10.15.3"
+            $generator = "@microsoft/generator-sharepoint@1.8.2"            
+        }
+        "1.8.1"
+        {
+            $nodeJSVersion = "10.15.0"
+            $generator = "@microsoft/generator-sharepoint@1.8.1"
+        }
+        "1.8.0" 
         {
             $nodeJSVersion = "10.13.0"
             $generator = "@microsoft/generator-sharepoint@1.8.0"
-        }
+        }   
         "1.7.1" 
         {
             $nodeJSVersion = "8.12.0"
@@ -65,15 +80,12 @@ Function Start-SPFx()
     
     nvm install $nodeJSVersion
     nvm use $nodeJSVersion
-    nvm use $nodeJSVersion # Sometimes npm is not ready, double use!
 
     if(!(Test-Path -Path ".\node_modules" ))
     {
-        Write-Host "node_modules not found, installing SPFx prerequisites!" -ForegroundColor Yellow
         Start-Sleep -s 2
 
-        npm install -g yo gulp
-	npm install $generator
+        npm install -g yo gulp $generator
 
 	if((Test-Path -Path ".\package.json" ))
     	{
